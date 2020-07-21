@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
 -- main.lua
---
+--Finished
 -----------------------------------------------------------------------------------------
 
 local background = display.newImageRect("background.png",360,570)
@@ -12,11 +12,16 @@ local platform = display.newImageRect("platform.png",300,50)
 platform.x = display.contentCenterX
 platform.y = display.contentHeight-25
 
+local tapCount = 0
+
+local tapText  = display.newText(tapCount, display.contentCenterX, 20, native.systemFont, 40)
+tapText:setFillColor( 0, 0, 0 )
+
 --local balloon = display.newImageRect("balloon.png",100,112)
-local balloon = display.newImageRect("link.jpeg",100,112)
+local balloon = display.newImageRect("balloon.png",100,112)
 balloon.x = display.contentCenterX
 balloon.y = display.contentCenterY
---balloon.alpha = .8
+balloon.alpha = .4  --Controls transparency
 
 local physics = require("physics")
 physics.start()
@@ -26,6 +31,8 @@ physics.addBody(balloon,"dynamic",{radius = 50, bounce = .3})
 
 local function pushBalloon()
     balloon:applyLinearImpulse( 0, -0.75, balloon.x, balloon.y )
+    tapCount = tapCount + 1
+    tapText.text = tapCount
 end
 
 balloon:addEventListener( "tap", pushBalloon )
